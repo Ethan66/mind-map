@@ -12,6 +12,9 @@ const init = () => {
     mindMap.hasActiveNode = !!nodeList.length
     mindMap.curNode = node
   })
+  mindMap.v.on('data_change', (data: object) => {
+    localStorage.setItem('mind-map-data', JSON.stringify(data))
+  })
   ;[
     'back_forward',
     'node_contextmenu',
@@ -25,6 +28,9 @@ const init = () => {
       bus.emit(event, args)
     })
   })
+  if (localStorage.getItem('mind-map-data')) {
+    mindMap.v.setData(JSON.parse(localStorage.getItem('mind-map-data') as string))
+  }
 }
 export const bus = mitt()
 
@@ -37,13 +43,17 @@ export const mindMap = reactive({
     mindMap.v.execCommand(type)
   },
   export: (...arg: (string | boolean)[]) => {
-    console.log(111, ...arg, mindMap.v)
     mindMap.v.export(...arg)
   }
 })
 
 // 创建实例
-export const createMindMap = (options: any) => {
-  mindMap.v = new MindMap(options)
-  init()
+export const createMindMap = (options: any, isEdit: boolean) => {
+  mindMap.v = new MindMap({
+    mousewheelAction: 'zoom',
+    data: {},
+    initRootNodePosition: ['left', 'center'],
+    ...options
+  })
+  isEdit && init()
 }

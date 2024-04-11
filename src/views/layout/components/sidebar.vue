@@ -11,8 +11,8 @@
     :default-active="currentPath"
   >
     <el-menu-item class="logo-wapper" index="/index">
-      <el-icon><img src="/favicon.png" class="logo" /></el-icon>
-      <span class="ml-12 font-15">unicom 思维导图</span>
+      <el-icon><img src="/vite.svg" class="logo" /></el-icon>
+      <span class="ml-6 font-15" style="color: #fff">unicom 思维导图</span>
     </el-menu-item>
 
     <RzMenuItem v-for="item in routesList" :key="item.path" :route="item" />
@@ -74,7 +74,7 @@ import RzMenuItem from './rz-menu-item.vue'
 }
 
 .logo {
-  width: 32px;
+  width: 26px;
   border-radius: 4px;
 }
 </style>

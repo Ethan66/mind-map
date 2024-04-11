@@ -157,7 +157,6 @@ const onMouseup = ([e] = []) => {
 }
 // 展示右键菜单
 const handleShowMenu = ([e, node] = []) => {
-  console.warn('----- my data is e,node: ', e, node)
   type.value = node ? 'node' : 'svg'
   position.left = e.clientX + 10
   position.top = e.clientY + 10

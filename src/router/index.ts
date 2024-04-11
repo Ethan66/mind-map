@@ -12,6 +12,12 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/index.vue'),
         name: 'index',
         meta: { title: '首页', noCache: true, icon: '', isHidden: true }
+      },
+      {
+        path: 'detail/:commitId',
+        component: () => import('@/views/detail/index.vue'),
+        name: 'detail',
+        meta: { title: '', noCache: true, icon: '' }
       }
     ],
     meta: { isHidden: false }

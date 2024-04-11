@@ -30,7 +30,8 @@ import {
   Tickets,
   PriceTag,
   Menu,
-  Download
+  Upload,
+  DArrowLeft
 } from '@element-plus/icons-vue'
 import { mindMap as m, bus } from '@/utils/mind-map'
 const list = computed(() => [
@@ -116,7 +117,13 @@ const list = computed(() => [
     title: '导出',
     type: 'export',
     args: ['json', true, 'aa', true],
-    icon: markRaw(Download)
+    icon: markRaw(Upload)
+  },
+  {
+    code: 'quit',
+    title: '直接退出',
+    type: 'quit',
+    icon: markRaw(DArrowLeft)
   }
 ])
 
@@ -141,6 +148,7 @@ watch(
 )
 
 // 点击按钮
+const router = useRouter()
 const onClickBtn = item => {
   const args = item.args ?? []
   if (item.type === 'mind') {
@@ -148,6 +156,9 @@ const onClickBtn = item => {
   }
   if (item.type === 'export') {
     m.export(...args)
+  }
+  if (item.type === 'quit') {
+    router.go(-1)
   }
 }
 
