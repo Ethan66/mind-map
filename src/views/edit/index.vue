@@ -1,5 +1,7 @@
 <template>
-  <div class="mindMapDemo">
+  <div class="mind-map-edit">
+    <btn-list></btn-list>
+    <context-menu></context-menu>
     <div id="mindMapContainer"></div>
     <div class="toolbar" v-if="activeNodes.length > 0">
       <button @click="inserImage">插入图片</button>
@@ -7,15 +9,14 @@
       <button @click="insertLink">插入超链接</button>
       <button @click="insertNote">插入备注</button>
       <button @click="insertTag">插入标签</button>
-      <button @click="insertGa">插入概要</button>
       <button @click="insertLine">插入关联线</button>
     </div>
   </div>
 </template>
 <script setup>
-import MindMap from 'simple-mind-map'
-
-let mindMap = null
+import btnList from './components/btn-list.vue'
+import contextMenu from './components/context-menu.vue'
+import { createMindMap } from '@/utils/mind-map'
 
 // 当前激活的节点列表
 const activeNodes = shallowRef([])
@@ -61,21 +62,15 @@ const insertTag = () => {
   })
 }
 
-// 插入概要
-const insertGa = () => {
-  mindMap.execCommand('ADD_GENERALIZATION', {
-    text: '自定义概要内容'
-  })
-}
-
 // 插入关联线
 const insertLine = () => {
-  mindMap.associativeLine.createLineFromActiveNode()
+  //   mindMap.associativeLine.createLineFromActiveNode()
 }
 
 onMounted(() => {
-  mindMap = new MindMap({
+  createMindMap({
     el: document.getElementById('mindMapContainer'),
+    mousewheelAction: 'zoom',
     data: {
       data: {
         text: '根节点'
@@ -97,36 +92,28 @@ onMounted(() => {
     },
     initRootNodePosition: ['left', 'center']
   })
-
-  // 监听节点激活事件
-  mindMap.on('node_active', (node, nodeList) => {
-    activeNodes.value = nodeList
-  })
 })
 </script>
 
-<style>
-.mindMapDemo {
+<style lang="less" scoped>
+.mind-map-edit {
   width: 100%;
+  height: 100%;
   position: relative;
-}
+  #mindMapContainer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-left: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(241, 241, 241) !important;
+  }
 
-#mindMapContainer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 400px;
-}
-
-#mindMapContainer * {
-  margin: 0;
-  padding: 0;
-}
-
-.toolbar {
-  position: absolute;
-  left: 10px;
-  top: 10px;
+  .toolbar {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
 }
 </style>

@@ -12,43 +12,15 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/index.vue'),
         name: 'index',
         meta: { title: '首页', noCache: true, icon: '', isHidden: true }
-      },
-      {
-        path: 'error-manage',
-        redirect: '/error-manage/list',
-        name: 'error',
-        meta: { title: '错误管理', noCache: false, icon: 'system', isHidden: false },
-        children: [
-          {
-            path: 'list',
-            component: () => import('@/views/error-manage/list.vue'),
-            name: 'error-list',
-            meta: { title: '错误列表', noCache: false, icon: 'table', isHidden: false }
-          }
-        ]
-      },
-      {
-        path: 'api-manage',
-        redirect: '/api-manage/list',
-        name: 'api-manage',
-        meta: { title: '接口管理', noCache: false, icon: 'system', isHidden: false },
-        children: [
-          {
-            path: 'list',
-            component: () => import('@/views/api-manage/list.vue'),
-            name: 'api-list',
-            meta: { title: '接口列表', noCache: false, icon: 'table', isHidden: false }
-          }
-        ]
       }
     ],
     meta: { isHidden: false }
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/login/index.vue'),
-    meta: { isHidden: true }
+    path: '/edit',
+    component: () => import('@/views/edit/index.vue'),
+    name: 'edit',
+    meta: { title: '编辑', noCache: true, icon: '', isHidden: true }
   },
   {
     path: '/:pathMatch(.*)*',

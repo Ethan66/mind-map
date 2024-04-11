@@ -12,7 +12,7 @@
   >
     <el-menu-item class="logo-wapper" index="/index">
       <el-icon><img src="/favicon.png" class="logo" /></el-icon>
-      <span class="ml-12 font-15">PitPat 日志管理后台</span>
+      <span class="ml-12 font-15">unicom 思维导图</span>
     </el-menu-item>
 
     <RzMenuItem v-for="item in routesList" :key="item.path" :route="item" />

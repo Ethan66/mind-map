@@ -13,6 +13,7 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
+      imports: ['vue', 'vue-router'],
       resolvers: [ElementPlusResolver()]
     }),
     Components({
@@ -25,9 +26,9 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]'
     })
   ],
-  base: '/pitpat_log_web/',
+  base: '/mind/',
   build: {
-    outDir: 'dist/pitpat_log_web',
+    outDir: 'dist/mind',
     assetsDir: 'static',
     sourcemap: false
   },
