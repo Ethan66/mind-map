@@ -11,8 +11,14 @@ const init = () => {
     mindMap.activeNodes = nodeList
     mindMap.hasActiveNode = !!nodeList.length
     mindMap.curNode = node
+    if (node && !node.getStyle('borderWidth') && !node.isRoot) {
+      node.setStyle('borderWidth', 1)
+      node.setStyle('borderColor', '#549688')
+      node.setStyle('fillColor', '#fff')
+    }
   })
   mindMap.v.on('data_change', (data: object) => {
+    localStorage.setItem('mind-map-editing', '1')
     localStorage.setItem('mind-map-data', JSON.stringify(data))
   })
   ;[
@@ -56,4 +62,7 @@ export const createMindMap = (options: any, isEdit: boolean) => {
     ...options
   })
   isEdit && init()
+  mindMap.v.keyCommand.removeShortcut('Del')
+  mindMap.v.keyCommand.removeShortcut('Control+C')
+  mindMap.v.keyCommand.removeShortcut('Control+V')
 }

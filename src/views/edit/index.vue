@@ -1,27 +1,38 @@
 <template>
   <div class="mind-map-edit">
-    <btn-list></btn-list>
+    <btn-list v-model:showExport="showExport"></btn-list>
     <context-menu></context-menu>
     <div id="mindMapContainer"></div>
+    <export-dialog v-model="showExport" :isNewFile="isNewFile" />
   </div>
 </template>
 <script setup>
 import btnList from './components/btn-list.vue'
 import contextMenu from './components/context-menu.vue'
+import exportDialog from './components/export-dialog.vue'
 import { mindMap as m, createMindMap } from '@/utils/mind-map'
 
-const route = useRoute()
+const showExport = ref(false)
+const isNewFile = ref(true)
 
+const route = useRoute()
 onMounted(() => {
   createMindMap(
     {
-      el: document.getElementById('mindMapContainer')
+      el: document.getElementById('mindMapContainer'),
+      data: {
+        data: {
+          text: '根节点'
+        },
+        children: []
+      }
     },
     true
   )
-  if (route.query.commitId) {
-    const filePath = `../../mindData/${route.query.commitId}.json`
+  if (route.query.pageName && !localStorage.getItem('mind-map-editing')) {
+    const filePath = `../../mindData/${route.query.pageName}.json`
     import(filePath).then(res => {
+      isNewFile.value = false
       m.v.setFullData(res.default)
     })
   }

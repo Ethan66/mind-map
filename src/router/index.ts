@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import pageRoutes from './pageRoutes'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -13,12 +14,7 @@ export const routes: RouteRecordRaw[] = [
         name: 'index',
         meta: { title: '首页', noCache: true, icon: '', isHidden: true }
       },
-      {
-        path: 'detail/:commitId',
-        component: () => import('@/views/detail/index.vue'),
-        name: 'detail',
-        meta: { title: '', noCache: true, icon: '' }
-      }
+      ...pageRoutes
     ],
     meta: { isHidden: false }
   },

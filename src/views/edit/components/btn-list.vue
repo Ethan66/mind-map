@@ -18,134 +18,18 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Back,
-  Right,
-  Delete,
-  Connection,
-  Coordinate,
-  Picture,
-  Grape,
-  Link,
-  Tickets,
-  PriceTag,
-  Menu,
-  Upload,
-  DArrowLeft
-} from '@element-plus/icons-vue'
 import { mindMap as m, bus } from '@/utils/mind-map'
-const list = computed(() => [
-  {
-    code: 'BACK',
-    disabled: isBackEnd.value, //  readonly
-    title: '回退',
-    type: 'mind',
-    icon: markRaw(Back)
-  },
-  {
-    code: 'FORWARD',
-    disabled: isForwardEnd.value, // readonly
-    title: '前进',
-    type: 'mind',
-    icon: markRaw(Right)
-  },
-  {
-    code: 'INSERT_NODE',
-    disabled: !m.hasActiveNode || m.curNode?.isGeneralization,
-    title: '同级节点',
-    type: 'mind',
-    icon: markRaw(Connection)
-  },
-  {
-    code: 'INSERT_CHILD_NODE',
-    disabled: !m.hasActiveNode || m.curNode?.isGeneralization,
-    title: '子节点',
-    type: 'mind',
-    icon: markRaw(Coordinate)
-  },
-  {
-    code: 'REMOVE_CURRENT_NODE',
-    disabled: !m.hasActiveNode,
-    title: '删除节点',
-    type: 'mind',
-    icon: markRaw(Delete)
-  },
-  {
-    code: 'image', // to do
-    disabled: !m.hasActiveNode,
-    title: '图片',
-    type: 'dialog',
-    icon: markRaw(Picture)
-  },
-  {
-    code: 'icon', // to do
-    disabled: !m.hasActiveNode,
-    title: '图标',
-    type: 'dialog',
-    icon: markRaw(Grape)
-  },
-  {
-    code: 'link', // to do
-    disabled: !m.hasActiveNode,
-    title: '超链接',
-    type: 'dialog',
-    icon: markRaw(Link)
-  },
-  {
-    code: 'note', // to do
-    disabled: !m.hasActiveNode,
-    title: '备注',
-    type: 'dialog',
-    icon: markRaw(Tickets)
-  },
-  {
-    code: 'tag', // to do
-    disabled: !m.hasActiveNode,
-    title: '标签',
-    type: 'dialog',
-    icon: markRaw(PriceTag)
-  },
-  {
-    code: 'ADD_GENERALIZATION',
-    disabled: !m.hasActiveNode || m.curNode?.isRoot || m.curNode?.isGeneralization,
-    title: '概要',
-    type: 'mind',
-    icon: markRaw(Menu)
-  },
-  {
-    code: 'export',
-    title: '导出',
-    type: 'export',
-    args: ['json', true, 'aa', true],
-    icon: markRaw(Upload)
-  },
-  {
-    code: 'quit',
-    title: '直接退出',
-    type: 'quit',
-    icon: markRaw(DArrowLeft)
-  }
-])
+import { ElMessageBox } from 'element-plus'
+import { list, isBackEnd, isForwardEnd } from './btn-list.ts'
+
+const emit = defineEmits(['update:showExport'])
 
 // 监听回退
-const isBackEnd = ref(false)
-const isForwardEnd = ref(false)
 const handleListenBackForward = ([index, len]: number[] = []) => {
   isBackEnd.value = index <= 0
   isForwardEnd.value = index >= len - 1
 }
 bus.on('back_forward', handleListenBackForward)
-
-watch(
-  () => m.curNode,
-  node => {
-    if (node && !node.getStyle('borderWidth')) {
-      node.setStyle('borderWidth', 1)
-      node.setStyle('borderColor', '#549688')
-      node.setStyle('fillColor', '#fff')
-    }
-  }
-)
 
 // 点击按钮
 const router = useRouter()
@@ -155,10 +39,16 @@ const onClickBtn = item => {
     m.execCommand(item.code, ...args)
   }
   if (item.type === 'export') {
-    m.export(...args)
+    emit('update:showExport', true)
   }
   if (item.type === 'quit') {
-    router.go(-1)
+    ElMessageBox.confirm('退出将不保存修改数据，请确定要退出吗', '警告', {
+      type: 'warning'
+    }).then(() => {
+      localStorage.removeItem('mind-map-data')
+      localStorage.removeItem('mind-map-editing')
+      router.go(-1)
+    })
   }
 }
 

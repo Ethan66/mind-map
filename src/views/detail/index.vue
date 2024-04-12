@@ -1,30 +1,22 @@
 <template>
   <div class="detail-page">
     <div style="position: absolute; right: 10px">
-      <el-button type="primary" :icon="Plus" v-if="isNewFile" @click="router.push({ name: 'edit' })"
-        >新 增</el-button
-      >
-      <el-button
-        type="primary"
-        :icon="Edit"
-        v-else
-        @click="router.push({ name: 'edit', query: { commitId: route.params.commitId } })"
-        >编 辑</el-button
-      >
+      <el-button type="primary" :icon="Plus" v-if="isNewFile" @click="onGoEdit">新 增</el-button>
+      <el-button type="primary" :icon="Edit" v-else @click="onGoEdit">编 辑</el-button>
     </div>
     <div id="mindMapContainer"></div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { Plus, Edit } from '@element-plus/icons-vue'
 import { mindMap as m, createMindMap } from '@/utils/mind-map'
 
 const route = useRoute()
-const router = useRouter()
+const pageName = route.path.replace(/^\/(([a-zA-Z-]+?\/)+)([a-z-A-Z]+)$/g, '$3')
 
 const isNewFile = ref(true)
 onMounted(() => {
-  const filePath = `../../mindData/${route.params.commitId}.json`
+  const filePath = `../../mindData/${pageName}.json`
   import(filePath).then(res => {
     isNewFile.value = false
     createMindMap({
@@ -33,6 +25,13 @@ onMounted(() => {
     m.v.setFullData(res.default)
   })
 })
+
+const router = useRouter()
+const onGoEdit = () => {
+  localStorage.removeItem('mind-map-data')
+  localStorage.removeItem('mind-map-editing')
+  router.push({ name: 'edit', query: { pageName } })
+}
 </script>
 
 <style>
