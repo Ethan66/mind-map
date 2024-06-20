@@ -14,6 +14,9 @@
         <p class="btn-list__title">{{ item.title }}</p>
       </li>
     </ul>
+    <tag-dialog v-model:show="showTagDialog" />
+    <icon-dialog v-model:show="showIconDialog" />
+    <note-dialog v-model:show="showNoteDialog" />
   </div>
 </template>
 
@@ -21,6 +24,10 @@
 import { mindMap as m, bus } from '@/utils/mind-map'
 import { ElMessageBox } from 'element-plus'
 import { list, isBackEnd, isForwardEnd } from './btn-list.ts'
+import tagDialog from './tag-dialog.vue'
+import iconDialog from './icon-dialog.vue'
+import noteDialog from './note-dialog.vue'
+import { localStore } from '@/utils/storage'
 
 const emit = defineEmits(['update:showExport'])
 
@@ -33,8 +40,21 @@ bus.on('back_forward', handleListenBackForward)
 
 // 点击按钮
 const router = useRouter()
+const showTagDialog = ref(false)
+const showIconDialog = ref(false)
+const showNoteDialog = ref(false)
 const onClickBtn = item => {
+  if (item.disabled) return
   const args = item.args ?? []
+  if (item.code === 'tag') {
+    showTagDialog.value = true
+  }
+  if (item.code === 'icon') {
+    showIconDialog.value = true
+  }
+  if (item.code === 'note') {
+    showNoteDialog.value = true
+  }
   if (item.type === 'mind') {
     m.execCommand(item.code, ...args)
   }
@@ -45,8 +65,8 @@ const onClickBtn = item => {
     ElMessageBox.confirm('退出将不保存修改数据，请确定要退出吗', '警告', {
       type: 'warning'
     }).then(() => {
-      localStorage.removeItem('mind-map-data')
-      localStorage.removeItem('mind-map-editing')
+      localStore.remove('data')
+      localStore.remove('editing')
       router.go(-1)
     })
   }

@@ -11,6 +11,7 @@ import btnList from './components/btn-list.vue'
 import contextMenu from './components/context-menu.vue'
 import exportDialog from './components/export-dialog.vue'
 import { mindMap as m, createMindMap } from '@/utils/mind-map'
+import { localStore } from '@/utils/storage'
 
 const showExport = ref(false)
 const isNewFile = ref(true)
@@ -29,13 +30,15 @@ onMounted(() => {
     },
     true
   )
-  if (route.query.pageName && !localStorage.getItem('mind-map-editing')) {
-    const filePath = `../../mindData/${route.query.pageName}.json`
-    import(filePath).then(res => {
-      isNewFile.value = false
-      m.v.setFullData(res.default)
-    })
-  }
+  localStore.get('editing').then(({ v }) => {
+    if (!v && route.query.pageName) {
+      const filePath = `../../mindData/${route.query.pageName}.json`
+      import(filePath).then(res => {
+        isNewFile.value = false
+        m.v.setFullData(res.default)
+      })
+    }
+  })
 })
 </script>
 

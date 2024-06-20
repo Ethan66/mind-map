@@ -1,5 +1,11 @@
 const configs = [
-  { title: '借款', path: 'borrow', children: [{ title: '申请借款', path: 'borrow-money' }] }
+  { title: '借款', path: 'borrow', children: [{ title: '申请借款', path: 'borrow-money' }] },
+  {
+    title: '智选借款',
+    path: 'borrow-adv',
+    children: [{ title: '申请借款', path: 'adv-borrow-money' }]
+  },
+  { title: '智选还款', path: 'repayment-adv', children: [{ title: '未还账单', path: 'waitbill' }] }
 ]
 
 const transConfig = (configs: any[]) => {

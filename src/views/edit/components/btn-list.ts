@@ -62,7 +62,7 @@ export const list = computed(() => [
     icon: markRaw(Picture)
   },
   {
-    code: 'icon', // to do
+    code: 'icon',
     disabled: !m.hasActiveNode,
     title: '图标',
     type: 'dialog',
@@ -83,7 +83,7 @@ export const list = computed(() => [
     icon: markRaw(Tickets)
   },
   {
-    code: 'tag', // to do
+    code: 'tag',
     disabled: !m.hasActiveNode,
     title: '标签',
     type: 'dialog',
