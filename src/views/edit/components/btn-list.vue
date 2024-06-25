@@ -15,7 +15,7 @@
       </li>
     </ul>
     <tag-dialog v-model:show="showTagDialog" />
-    <icon-dialog v-model:show="showIconDialog" />
+    <icon-drawer v-model:show="showIconDrawer" />
     <note-dialog v-model:show="showNoteDialog" />
   </div>
 </template>
@@ -25,7 +25,7 @@ import { mindMap as m, bus } from '@/utils/mind-map'
 import { ElMessageBox } from 'element-plus'
 import { list, isBackEnd, isForwardEnd } from './btn-list.ts'
 import tagDialog from './tag-dialog.vue'
-import iconDialog from './icon-dialog.vue'
+import iconDrawer from './icon-drawer.vue'
 import noteDialog from './note-dialog.vue'
 import { localStore } from '@/utils/storage'
 
@@ -41,7 +41,7 @@ bus.on('back_forward', handleListenBackForward)
 // 点击按钮
 const router = useRouter()
 const showTagDialog = ref(false)
-const showIconDialog = ref(false)
+const showIconDrawer = ref(false)
 const showNoteDialog = ref(false)
 const onClickBtn = item => {
   if (item.disabled) return
@@ -50,7 +50,7 @@ const onClickBtn = item => {
     showTagDialog.value = true
   }
   if (item.code === 'icon') {
-    showIconDialog.value = true
+    showIconDrawer.value = true
   }
   if (item.code === 'note') {
     showNoteDialog.value = true
