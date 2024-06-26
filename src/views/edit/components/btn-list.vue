@@ -16,6 +16,7 @@
     </ul>
     <tag-dialog v-model:show="showTagDialog" />
     <icon-drawer v-model:show="showIconDrawer" />
+    <style-drawer v-model:show="showStyleDrawer" />
     <note-dialog v-model:show="showNoteDialog" />
   </div>
 </template>
@@ -26,6 +27,7 @@ import { ElMessageBox } from 'element-plus'
 import { list, isBackEnd, isForwardEnd } from './btn-list.ts'
 import tagDialog from './tag-dialog.vue'
 import iconDrawer from './icon-drawer.vue'
+import styleDrawer from './style-drawer.vue'
 import noteDialog from './note-dialog.vue'
 import { localStore } from '@/utils/storage'
 
@@ -42,6 +44,7 @@ bus.on('back_forward', handleListenBackForward)
 const router = useRouter()
 const showTagDialog = ref(false)
 const showIconDrawer = ref(false)
+const showStyleDrawer = ref(false)
 const showNoteDialog = ref(false)
 const onClickBtn = item => {
   if (item.disabled) return
@@ -51,6 +54,9 @@ const onClickBtn = item => {
   }
   if (item.code === 'icon') {
     showIconDrawer.value = true
+  }
+  if (item.code === 'style') {
+    showStyleDrawer.value = true
   }
   if (item.code === 'note') {
     showNoteDialog.value = true

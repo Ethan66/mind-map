@@ -11,7 +11,8 @@ import {
   PriceTag,
   Menu,
   Upload,
-  DArrowLeft
+  DArrowLeft,
+  MagicStick
 } from '@element-plus/icons-vue'
 import { mindMap as m } from '@/utils/mind-map'
 
@@ -54,13 +55,13 @@ export const list = computed(() => [
     type: 'mind',
     icon: markRaw(Delete)
   },
-  {
+  /* {
     code: 'image', // to do
     disabled: !m.hasActiveNode,
     title: '图片',
     type: 'dialog',
     icon: markRaw(Picture)
-  },
+  }, */
   {
     code: 'icon',
     disabled: !m.hasActiveNode,
@@ -76,7 +77,7 @@ export const list = computed(() => [
     icon: markRaw(Link)
   },
   {
-    code: 'note', // to do
+    code: 'note',
     disabled: !m.hasActiveNode,
     title: '备注',
     type: 'dialog',
@@ -88,6 +89,13 @@ export const list = computed(() => [
     title: '标签',
     type: 'dialog',
     icon: markRaw(PriceTag)
+  },
+  {
+    code: 'style',
+    disabled: !m.hasActiveNode,
+    title: '样式',
+    type: 'dialog',
+    icon: markRaw(MagicStick)
   },
   {
     code: 'ADD_GENERALIZATION',
