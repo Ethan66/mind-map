@@ -18,6 +18,7 @@
     <icon-drawer v-model:show="showIconDrawer" />
     <style-drawer v-model:show="showStyleDrawer" />
     <note-dialog v-model:show="showNoteDialog" />
+    <link-dialog v-model:show="showLinkDialog" />
   </div>
 </template>
 
@@ -29,6 +30,7 @@ import tagDialog from './tag-dialog.vue'
 import iconDrawer from './icon-drawer.vue'
 import styleDrawer from './style-drawer.vue'
 import noteDialog from './note-dialog.vue'
+import linkDialog from './link-dialog.vue'
 import { localStore } from '@/utils/storage'
 
 const emit = defineEmits(['update:showExport'])
@@ -46,6 +48,7 @@ const showTagDialog = ref(false)
 const showIconDrawer = ref(false)
 const showStyleDrawer = ref(false)
 const showNoteDialog = ref(false)
+const showLinkDialog = ref(false)
 const onClickBtn = item => {
   if (item.disabled) return
   const args = item.args ?? []
@@ -60,6 +63,9 @@ const onClickBtn = item => {
   }
   if (item.code === 'note') {
     showNoteDialog.value = true
+  }
+  if (item.code === 'link') {
+    showLinkDialog.value = true
   }
   if (item.type === 'mind') {
     m.execCommand(item.code, ...args)

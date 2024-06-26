@@ -27,7 +27,7 @@ import { localStore } from '@/utils/storage'
 const props = defineProps<{
   show: boolean
 }>()
-const emits = defineEmits(['update:show', 'updateTags'])
+const emits = defineEmits(['update:show'])
 const showDialog = ref(false)
 const tags = ref<string[]>([])
 const options = ref<string[]>([])
