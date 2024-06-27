@@ -1,5 +1,5 @@
 // 字号
-export const fontSizeList = [10, 12, 14, 16, 18, 20, 22, 24]
+export const fontSizeList = [10, 12, 13, 14, 15, 16, 18, 20, 22, 24]
 // 边框宽度
 export const borderWidthList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 // 边框样式

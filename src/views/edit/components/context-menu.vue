@@ -21,6 +21,26 @@
         <span class="name">插入子级节点</span>
         <span class="desc">Tab</span>
       </div>
+      <div class="item" @click="exec('dialog_style')" :class="{ disabled: insertNodeBtnDisabled }">
+        <span class="name">样式</span>
+        <span class="desc">Shift + S</span>
+      </div>
+      <div class="item" @click="exec('dialog_icon')" :class="{ disabled: insertNodeBtnDisabled }">
+        <span class="name">图标</span>
+        <span class="desc">Shift + I</span>
+      </div>
+      <div class="item" @click="exec('dialog_tag')" :class="{ disabled: insertNodeBtnDisabled }">
+        <span class="name">标签</span>
+        <span class="desc">Shift + T</span>
+      </div>
+      <div class="item" @click="exec('dialog_note')" :class="{ disabled: insertNodeBtnDisabled }">
+        <span class="name">备注</span>
+        <span class="desc">Shift + N</span>
+      </div>
+      <div class="item" @click="exec('dialog_link')" :class="{ disabled: insertNodeBtnDisabled }">
+        <span class="name">超链接</span>
+        <span class="desc">Shift + L</span>
+      </div>
       <div
         class="item"
         @click="exec('INSERT_PARENT_NODE')"
@@ -179,9 +199,14 @@ bus.on('expand_btn_click', handleHideMenu)
 bus.on('svg_mousedown', onMousedown)
 bus.on('mouseup', onMouseup)
 
+const emit = defineEmits('updateDialogData')
+
 const exec = (key, disabled, ...args) => {
   if (disabled) {
     return
+  }
+  if (key.startsWith('dialog')) {
+    emit('updateDialogData', key.replace(/dialog_(\w+)/, '$1'))
   }
   switch (key) {
     case 'COPY_NODE':

@@ -33,6 +33,13 @@ export default defineConfig({
     assetsDir: 'static',
     sourcemap: false
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

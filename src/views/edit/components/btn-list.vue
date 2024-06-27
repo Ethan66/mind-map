@@ -14,11 +14,11 @@
         <p class="btn-list__title">{{ item.title }}</p>
       </li>
     </ul>
-    <tag-dialog v-model:show="showTagDialog" />
-    <icon-drawer v-model:show="showIconDrawer" />
-    <style-drawer v-model:show="showStyleDrawer" />
-    <note-dialog v-model:show="showNoteDialog" />
-    <link-dialog v-model:show="showLinkDialog" />
+    <tag-dialog v-model:show="showDialogData.tag" />
+    <icon-drawer v-model:show="showDialogData.icon" />
+    <style-drawer v-model:show="showDialogData.style" />
+    <note-dialog v-model:show="showDialogData.note" />
+    <link-dialog v-model:show="showDialogData.link" />
   </div>
 </template>
 
@@ -26,6 +26,7 @@
 import { mindMap as m, bus } from '@/utils/mind-map'
 import { ElMessageBox } from 'element-plus'
 import { list, isBackEnd, isForwardEnd } from './btn-list.ts'
+import { showDialogData } from '../dialog-data'
 import tagDialog from './tag-dialog.vue'
 import iconDrawer from './icon-drawer.vue'
 import styleDrawer from './style-drawer.vue'
@@ -44,28 +45,11 @@ bus.on('back_forward', handleListenBackForward)
 
 // 点击按钮
 const router = useRouter()
-const showTagDialog = ref(false)
-const showIconDrawer = ref(false)
-const showStyleDrawer = ref(false)
-const showNoteDialog = ref(false)
-const showLinkDialog = ref(false)
 const onClickBtn = item => {
   if (item.disabled) return
   const args = item.args ?? []
-  if (item.code === 'tag') {
-    showTagDialog.value = true
-  }
-  if (item.code === 'icon') {
-    showIconDrawer.value = true
-  }
-  if (item.code === 'style') {
-    showStyleDrawer.value = true
-  }
-  if (item.code === 'note') {
-    showNoteDialog.value = true
-  }
-  if (item.code === 'link') {
-    showLinkDialog.value = true
+  if (['tag', 'icon', 'style', 'note', 'link'].includes(item.code)) {
+    showDialogData[item.code] = true
   }
   if (item.type === 'mind') {
     m.execCommand(item.code, ...args)

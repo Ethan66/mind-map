@@ -21,9 +21,13 @@
 import SideBar from './components/sidebar.vue'
 import LayoutHeader from './components/header.vue'
 import TagsView from './components/tags-view.vue'
+import { bus } from '@/utils/mind-map'
 
 import { ref } from 'vue'
 const isCollapse = ref(false)
+watch(isCollapse, () => {
+  bus.emit('renderMindMap')
+})
 </script>
 <style lang="less" scoped>
 .layout {

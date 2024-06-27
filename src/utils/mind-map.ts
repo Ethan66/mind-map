@@ -62,9 +62,33 @@ export const createMindMap = (options: any, isEdit?: boolean) => {
     mousewheelAction: 'zoom',
     data: {},
     initRootNodePosition: ['left', 'center'],
+    textAutoWrapWidth: 10000,
+    themeConfig: {
+      associativeLineTextFontSize: 13,
+      root: {
+        fontSize: 14
+      },
+      node: {
+        fontSize: 13
+      },
+      generalization: {
+        fontSize: 13
+      },
+      second: {
+        fontSize: 13
+      }
+    },
     ...options
   })
-  isEdit && init()
+  if (isEdit) {
+    init()
+  } else {
+    ;['svg_mousedown', 'mouseup'].forEach((event: string) => {
+      mindMap.v.on(event, (...args: (string | boolean)[]) => {
+        bus.emit(event, args)
+      })
+    })
+  }
   mindMap.v.keyCommand.removeShortcut('Del')
   mindMap.v.keyCommand.removeShortcut('Control+C')
   mindMap.v.keyCommand.removeShortcut('Control+V')

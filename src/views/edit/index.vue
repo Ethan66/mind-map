@@ -1,7 +1,7 @@
 <template>
   <div class="mind-map-edit">
     <btn-list v-model:showExport="showExport"></btn-list>
-    <context-menu></context-menu>
+    <context-menu :showDialogData="showDialogData" @updateDialogData="handleUpdate"></context-menu>
     <div id="mindMapContainer"></div>
     <export-dialog v-model="showExport" :isNewFile="isNewFile" />
   </div>
@@ -11,6 +11,7 @@ import btnList from './components/btn-list.vue'
 import contextMenu from './components/context-menu.vue'
 import exportDialog from './components/export-dialog.vue'
 import { mindMap as m, createMindMap } from '@/utils/mind-map'
+import { showDialogData } from './dialog-data'
 import { localStore } from '@/utils/storage'
 
 const showExport = ref(false)
@@ -31,8 +32,8 @@ onMounted(() => {
     true
   )
   localStore.get('editing').then(({ v }) => {
-    if (!v && route.query.pageName) {
-      const filePath = `../../mindData/${route.query.pageName}.json`
+    if (!v && route.query.pageName && route.query.operateType === 'edit') {
+      const filePath = `../../mindData/${route.query.pageName + (route.query.commitId ? '_' + route.query.commitId : '')}.json`
       import(filePath).then(res => {
         isNewFile.value = false
         m.v.setFullData(res.default)
@@ -40,6 +41,10 @@ onMounted(() => {
     }
   })
 })
+
+const handleUpdate = key => {
+  showDialogData[key] = true
+}
 </script>
 
 <style lang="less" scoped>

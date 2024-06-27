@@ -27,7 +27,7 @@ withDefaults(defineProps<{ isCollapse: boolean }>(), {
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
-const currentPath = computed(() => route.fullPath)
+const currentPath = computed(() => route.path)
 
 watch(
   () => currentPath.value,
