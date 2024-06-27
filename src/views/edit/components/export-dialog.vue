@@ -5,6 +5,10 @@
       <el-input v-model="data.name" disabled style="width: 200px; margin: 0 10px" />
       <el-checkbox v-model="data.hasTheme" disabled>是否包含主题、结构等配置数据</el-checkbox>
     </div>
+    <div style="display: flex; align-items: center; margin: 10px 0">
+      <span style="margin-right: 10px">commitId</span>
+      <el-input v-model="data.commitId" style="width: 460px" />
+    </div>
     <div class="export-dialog__json-btn">
       <img src="@/assets/svg/JSON.svg" alt="" />
       <div>
@@ -47,12 +51,24 @@ watch(visible, val => {
 })
 
 const route = useRoute()
-const data = reactive({ name: route.query.pageName, fileType: 'json', hasTheme: true })
+const data = reactive({
+  name: route.query.pageName,
+  commitId: route.query.commitId || '',
+  fileType: 'json',
+  hasTheme: true
+})
 
 !data.name && ElMessage.error('路由缺少commitId，请退出')
 const onConfirm = () => {
   if (!data.name) return ElMessage.error('路由缺少commitId，请退出')
-  m.export(...[data.fileType, true, data.name, data.hasTheme])
+  m.export(
+    ...[
+      data.fileType,
+      true,
+      `${data.name}${data.commitId ? '_' + data.commitId : ''}`,
+      data.hasTheme
+    ]
+  )
   visible.value = false
 }
 </script>
