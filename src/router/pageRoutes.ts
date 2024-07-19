@@ -1,5 +1,12 @@
 const configs = [
-  { title: '借款', path: 'borrow', children: [{ title: '申请借款', path: 'borrow-money' }] },
+  {
+    title: '借款',
+    path: 'borrow',
+    children: [
+      { title: '申请借款', path: 'borrow-money' },
+      { title: '绑卡', path: 'borrow-bindbankcard' }
+    ]
+  },
   {
     title: '智选借款',
     path: 'borrow-adv',
