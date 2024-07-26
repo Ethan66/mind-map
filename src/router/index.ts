@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import pageRoutes from './pageRoutes'
 
 export const routes: RouteRecordRaw[] = [
@@ -33,7 +33,7 @@ export const routes: RouteRecordRaw[] = [
 ]
 
 export const RzRouter = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   // 刷新时，滚动条位置还原
   scrollBehavior: () => ({ left: 0, top: 0 })

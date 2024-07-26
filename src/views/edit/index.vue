@@ -33,8 +33,9 @@ onMounted(() => {
   )
   localStore.get('editing').then(({ v }) => {
     if (!v && route.query.pageName && route.query.operateType === 'edit') {
+      const modules = import.meta.glob('../../mindData/**/*.json')
       const filePath = `../../mindData/${route.query.pageName + (route.query.commitId ? '_' + route.query.commitId : '')}.json`
-      import(filePath).then(res => {
+      modules[filePath]().then(res => {
         isNewFile.value = false
         m.v.setFullData(res.default)
       })
