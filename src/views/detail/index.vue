@@ -59,8 +59,9 @@ let mindMapData = { json: null }
 // 渲染思维导图
 const handleRenderMindMap = () => {
   clearTimeout(timer)
+  const modules = import.meta.glob('../../mindData/**/*.json')
   const filePath = `../../mindData/${pageName + (commitId.current ? '_' + commitId.current : '')}.json`
-  import(filePath).then(res => {
+  modules[filePath]().then((res: { default: any }) => {
     isFinishRender.value = true
     mindMapData.json = res.default
   })
