@@ -1,6 +1,6 @@
 <template>
   <div class="detail-page">
-    <div style="position: absolute; right: 10px; display: flex">
+    <div style="position: absolute; right: 10px; display: flex; z-index: 100">
       <el-select
         v-model="commitId.current"
         style="margin-right: 10px; width: 150px"
