@@ -12,6 +12,11 @@ const configs = [
     path: 'borrow-adv',
     children: [{ title: '申请借款', path: 'adv-borrow-money' }]
   },
+  {
+    title: '运营',
+    path: 'operation',
+    children: [{ title: '推广下载', path: 'operation-download' }]
+  },
   { title: '智选还款', path: 'repayment-adv', children: [{ title: '未还账单', path: 'waitbill' }] }
 ]
 
