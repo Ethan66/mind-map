@@ -19,6 +19,11 @@ const configs = [
     children: [{ title: '渠道登录', path: 'guide' }]
   },
   {
+    title: '微信',
+    path: 'wx',
+    children: [{ title: '小程序', path: 'wx-min' }]
+  },
+  {
     title: '运营',
     path: 'operation',
     children: [{ title: '推广下载', path: 'operation-download' }]
