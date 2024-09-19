@@ -21,7 +21,10 @@ const configs = [
   {
     title: '微信',
     path: 'wx',
-    children: [{ title: '小程序', path: 'wx-min' }]
+    children: [
+      { title: '小程序', path: 'wx-min' },
+      { title: '多账号切换', path: 'multiple-accounts' }
+    ]
   },
   {
     title: '运营',
