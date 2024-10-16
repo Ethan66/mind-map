@@ -1,10 +1,16 @@
 <template>
   <div class="home-wrap">
+    <div style="position: absolute; top: 10px; right: 10px; display: flex; z-index: 100">
+      <el-button type="warning" :icon="Edit" @click="onGoEdit('edit')">编 辑</el-button>
+    </div>
     <div id="mindMapContainer"></div>
   </div>
 </template>
 <script setup lang="ts">
+import { Edit } from '@element-plus/icons-vue'
+
 import { mindMap as m, createMindMap } from '@/utils/mind-map'
+import { localStore } from '@/utils/storage'
 
 // 渲染思维导图
 const handleRenderMindMap = () => {
@@ -16,6 +22,13 @@ const handleRenderMindMap = () => {
     })
     m.v.setFullData(res.default)
   })
+}
+
+const router = useRouter()
+const onGoEdit = (operateType: 'add' | 'edit') => {
+  localStore.remove('data')
+  localStore.remove('editing')
+  router.push({ name: 'edit', query: { operateType, pageName: 'home' } })
 }
 
 onMounted(() => {
